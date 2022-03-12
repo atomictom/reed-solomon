@@ -23,29 +23,33 @@ tired so I wouldn't say it's my highest quality code!
 
 Right now it's very half baked. There is a pseudo-library for doing RS encoding,
 but it's not very easy to use. There are some functions for doing a limited
-Shamir setup on top of the RS library. The Shamir setup takes a page from
-passphrases / diceware passwords and generates words instead of bytes so it's
-easier for humans to work with.
+Shamir setup on top of the RS library, though this functionality has now been
+split off into [another respository](https://github.com/atomictom/shamir).
 
 ## Performance
 
 The original implementation (Lagrangian interpolation) did about 1MiB/s (quite
-bad!). It currently does around 40MiB/s based on benchmarks, which is still
-fairly abysmal. I believe a purely code-based approach should be able to do
-around 400MiB/s based on other work I've seen (probably using memory more
-smartly to avoid copies and improve cache locality), and if using CPU intrinsics
-(e.g.  SIMD and CLMUL) I could likely achieve over 1GiB/s. There are also ways
-using Cauchy matrices (which I started to attempt but never got working) that
-can improve performance by finding encoding matrices that minimize the number of
-XORs. If I maintain interest, I may try some of this at some point.
+bad!). It currently does around 40MiB/s based on benchmarks (single threaded on
+a Ryzen 5 3600), which is still fairly abysmal. I suspect a purely code-based
+approach should be able to do around 400MiB/s based on other work I've seen. To
+do so, I would likely need to use memory more smartly to avoid copies and
+improve cache locality, and use CPU intrinsics (e.g.  SIMD and CLMUL).
+
+There are also ways using Cauchy matrices and a technique that turns
+multiplication into just a few XORs and ANDs that can improve performance
+described in [An XOR based erasure resilient coding
+scheme](https://www.cs.utexas.edu/~diz/Sub%20Websites/Research/An_XOR_based_erasure_resilient_coding_scheme.pdf).
+Going further, [Optimizing Cauchy Reed-Solomon Codes for Fault-Tolerant Network
+Storage
+Applications](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.140.2267&rep=rep1&type=pdf)
+describes how to find an optimal Cauchy matrix which reduces the number of XORs
+further still.
 
 ## Future Work
 
 At some point I'd like to refactor the interface to be simpler to use and I'd
 like to clean up the code to remove some of the cruft that came from learning
 RS.
-
-I'd also like to publish a tool for doing Shamir secret sharing at some point.
 
 As mentioned above, it'd be cool to improve the performance to try to get to
 1GiB/s.
