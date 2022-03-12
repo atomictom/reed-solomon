@@ -1,4 +1,4 @@
-# Experimental Reed-Solomon and Shamir Secret Sharing in Rust
+# Experimental Reed-Solomon in Rust
 
 ## Background
 
@@ -8,8 +8,9 @@ from the chapter on Polynomials. The exercise had to do with [Shamir's secret
 sharing algorithm](https://en.wikipedia.org/wiki/Shamir%27s_Secret_Sharing), but
 I was familiar enough with Reed-Solomon to realize they were probably based on
 the same concepts. I was looking for a programming project while reading that,
-so I decided to make a library to do RS encoding, and later actually did the
-Shamir's secret sharing portion. Additionally, this was a chance to learn Rust.
+so I decided to make a library to do RS encoding, and [later actually did the
+Shamir's secret sharing portion](https://github.com/atomictom/shamir).
+Additionally, this was a chance to learn more Rust.
 
 Currently the code is quite messy since I used a very slow method of computing
 RS at first (Lagrangian interpolation of polynomials) and only later added in a
